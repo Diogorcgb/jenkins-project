@@ -1,9 +1,9 @@
 pipeline {
     agent any
     
-    environment{
-        FILE_NAME = 'newfile.txt'
-        
+ parameters {
+        string(name: 'FILE_NAME', defaultValue: 'myfile.txt', description: 'Nome do arquivo?')
+
     }
     
 
@@ -34,12 +34,12 @@ pipeline {
         }
         stage('Create Hello File') {
             steps {
-                writeFile file: "$FILE_NAME", text: 'hello write file'
+                writeFile file: "${params.FILE_NAME}", text: 'hello write file'
             }
         }
         stage('Archive Artfact writefile File') {
             steps {
-                archiveArtifacts artifacts: "$FILE_NAME", followSymlinks: false
+                archiveArtifacts artifacts: "${params.FILE_NAME}", followSymlinks: false
                 
             }
         }
